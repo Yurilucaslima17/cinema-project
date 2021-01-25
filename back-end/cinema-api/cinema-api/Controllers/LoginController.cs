@@ -1,4 +1,6 @@
-﻿using cinema_api.Model;
+﻿using AutoMapper;
+using cinema_api.Data;
+using cinema_api.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,16 +21,20 @@ namespace cinema_api.Controllers
     public class LoginController : ControllerBase
     {
         private IConfiguration _config;
+        private readonly IUserRepo _repository;
+        private readonly IMapper _mapper;
 
-        public LoginController(IConfiguration config)
+        public LoginController(IConfiguration config, IUserRepo repository, IMapper mapper)
         {
             _config = config;
+            _repository = repository;
+            _mapper = mapper;
         }
         [HttpGet]
-        public IActionResult Login(string username, string pass)
+        public IActionResult Login(string email, string pass)
         {
-            UserModel login = new UserModel();
-            login.UserName = username;
+            User login = new User();
+            login.Email = email;
             login.Password = pass;
             IActionResult response = Unauthorized();
 
@@ -43,24 +49,18 @@ namespace cinema_api.Controllers
             return response;
         }
 
-        private UserModel AuthenticateUser(UserModel login)
+        private User AuthenticateUser(User login)
         {
-            UserModel user = null;
-            if(login.UserName=="teste" && login.Password == "123")
-            {
-                user = new UserModel { UserName = "Admin", Email = "adm@adm.com", Password = "123" };
-            }
-            return user;
+            return _repository.GetUserByEmail(login.Email);
         }
 
-        private string GenerateJSONWebToken(UserModel userinfo)
+        private string GenerateJSONWebToken(User userinfo)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userinfo.UserName),
                 new Claim(JwtRegisteredClaimNames.Email, userinfo.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
@@ -69,7 +69,7 @@ namespace cinema_api.Controllers
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Issuer"],
                 claims,
-                expires: DateTime.Now.AddMinutes(60),
+                expires: DateTime.Now.AddMinutes(120),
                 signingCredentials: credentials);
 
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);

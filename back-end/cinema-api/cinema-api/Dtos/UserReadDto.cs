@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace cinema_api.Model
+namespace cinema_api.Dtos
 {
-    public class UserModel
+    public class UserReadDto
     {
-        public string UserName { get; set; }
+        public int Id { get; set; }
 
         public string Password { get; set; }
 
-        public string Email { get; set; }     
+        public string Email { get; set; }
     }
 }
