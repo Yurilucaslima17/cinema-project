@@ -80,6 +80,18 @@
   margin-top: 3rem;
 }
 
+.grid section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+.grid section a{
+  margin: 0.5rem;
+}
+
 .card {
   margin: 1rem;
   flex-basis: 45%;

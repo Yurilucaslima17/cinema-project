@@ -1,5 +1,6 @@
 using AutoMapper;
 using cinema_api.Data;
+using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace cinema_api
 {
@@ -40,10 +42,10 @@ namespace cinema_api
         {
             services.AddDbContext<CinemaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
-            /*services.AddCors(options =>
+            services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
-            });*/
+                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin());
+            });
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -53,6 +55,8 @@ namespace cinema_api
             services.AddScoped<ISectionRepo, SqlSectionRepo>();
             services.AddScoped<IUserRepo, SqlUserRepo>();
 
+
+            services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme).AddCertificate();
             //TO DO
             /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -78,18 +82,20 @@ namespace cinema_api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            app.UseCors("CorsPolicy");
         }
     }
 }

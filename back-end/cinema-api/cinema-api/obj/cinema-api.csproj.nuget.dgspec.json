@@ -47,6 +47,14 @@
               "target": "Package",
               "version": "[8.1.0, )"
             },
+            "Microsoft.AspNet.WebApi.WebHost": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Certificate": {
+              "target": "Package",
+              "version": "[3.1.11, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[3.1.11, )"

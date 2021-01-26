@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace cinema_api.Controllers
 {
-    [Route("api/secoes")]
+    [Route("api/sessoes")]
     [ApiController]
     public class SectionController : ControllerBase
     {

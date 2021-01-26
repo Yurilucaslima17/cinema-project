@@ -48,3 +48,8 @@ F:\projetos\cinema-project\back-end\cinema-api\cinema-api\bin\Debug\netcoreapp3.
 F:\projetos\cinema-project\back-end\cinema-api\cinema-api\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
 F:\projetos\cinema-project\back-end\cinema-api\cinema-api\bin\Debug\netcoreapp3.1\AutoMapper.dll
 F:\projetos\cinema-project\back-end\cinema-api\cinema-api\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+F:\projetos\cinema-project\back-end\cinema-api\cinema-api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Certificate.dll
+F:\projetos\cinema-project\back-end\cinema-api\cinema-api\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
+F:\projetos\cinema-project\back-end\cinema-api\cinema-api\bin\Debug\netcoreapp3.1\System.Web.Http.dll
+F:\projetos\cinema-project\back-end\cinema-api\cinema-api\bin\Debug\netcoreapp3.1\System.Web.Http.WebHost.dll
+F:\projetos\cinema-project\back-end\cinema-api\cinema-api\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
