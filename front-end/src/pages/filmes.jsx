@@ -5,7 +5,7 @@ import ListaSalas from './components/listaSalas';
 import MainHeader from './components/header';
 import {PlusCircleOutlined} from '@ant-design/icons';
 
-export default function Salas({salas}){
+export default function Filmes({filmes}){
   
     return(
         <>
@@ -24,12 +24,12 @@ export default function Salas({salas}){
 }
 
 export async function getStaticProps() {
-    const response = await api.get('/api/salas');
+    const response = await api.get('/api/filmes');
     const { data } = await response;
   
     return {
       props: {
-        salas: data,
+        filmes: data,
       }
     }
   }

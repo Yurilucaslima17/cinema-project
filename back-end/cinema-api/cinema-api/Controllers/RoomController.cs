@@ -28,7 +28,7 @@ namespace cinema_api.Controllers
         {
             var rooms = _repository.GetAllRooms();
 
-            return Ok(_mapper.Map<RoomReadDto>(rooms));
+            return Ok(_mapper.Map<IEnumerable<RoomReadDto>>(rooms));
         }
 
         [HttpGet("{id}", Name = "GetRoomById")]
@@ -47,7 +47,7 @@ namespace cinema_api.Controllers
         {
             var sections = _repository.GetAllSectionsOnRoom(id);
             
-            return Ok(_mapper.Map<SectionReadDto>(sections));
+            return Ok(_mapper.Map<IEnumerable<SectionReadDto>>(sections));
         }
     }
 }

@@ -77,7 +77,7 @@ namespace cinema_api.Controllers
 
             return NoContent();
         }
-        [HttpGet("{id}/delete")]
+        [HttpDelete("{id}")]
         public ActionResult DeleteFilm(int id)
         {
 

@@ -1,8 +1,3 @@
-// import {GetAllFilms} from "../api/apiFilmes";
-// import json from "../../assets/Filmes-1611599668147.json";
-import axios from 'axios';
-import api from '../../services/api';
-
 export default function Filmes({ items }) {
     return(
         <section>

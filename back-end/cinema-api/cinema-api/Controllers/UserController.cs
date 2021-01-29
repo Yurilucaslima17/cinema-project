@@ -2,6 +2,7 @@
 using cinema_api.Data;
 using cinema_api.Dtos;
 using cinema_api.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -36,6 +37,7 @@ namespace cinema_api.Controllers
         }*/
 
         [HttpPost]
+        [Authorize]
         public ActionResult CreateUser(UserCreateDto user)
         {
             var userModel = _mapper.Map<User>(user);

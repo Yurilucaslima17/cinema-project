@@ -2,6 +2,8 @@
 using cinema_api.Data;
 using cinema_api.Dtos;
 using cinema_api.Model;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -28,7 +30,7 @@ namespace cinema_api.Controllers
         {
             var sections = _repository.GetAllSections();
 
-            return Ok(_mapper.Map<SectionReadDto>(sections));
+            return Ok(_mapper.Map<IEnumerable<SectionReadDto>>(sections));
         }
 
         [HttpGet("{id}", Name = "GetSectionById")]
@@ -47,12 +49,17 @@ namespace cinema_api.Controllers
         {
             var sectionModel = _mapper.Map<Section>(sectionCreateDto);
 
+            if (!_repository.ValidateSection(sectionModel))
+            {
+                return Forbid("Room already in use on this time");
+            }
+
             _repository.CreateSection(sectionModel);
             _repository.SaveChanges();
 
-            var filmReadDto = _mapper.Map<SectionReadDto>(sectionModel);
+            var sectionReadDto = _mapper.Map<SectionReadDto>(sectionModel);
 
-            return CreatedAtRoute(nameof(GetSectionById), new { id = filmReadDto.Id }, filmReadDto);
+            return CreatedAtRoute(nameof(GetSectionById), new { id = sectionReadDto.Id }, sectionReadDto);
         }
 
         [HttpPut("{id}")]
@@ -72,7 +79,7 @@ namespace cinema_api.Controllers
 
             return NoContent();
         }
-        [HttpGet("{id}/delete")]
+        [HttpDelete("{id}")]
         public ActionResult DeleteSection(int id)
         {
 
@@ -83,6 +90,32 @@ namespace cinema_api.Controllers
             }
 
             _repository.DeleteSection(section);
+
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public ActionResult PartialSectionUpdate(int id, JsonPatchDocument<SectionUpdateDto> patchDocument)
+        {
+            var sectionModelFromRepo = _repository.GetSectionById(id);
+            if (sectionModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            var sectionToPatch = _mapper.Map<SectionUpdateDto>(sectionModelFromRepo);
+            patchDocument.ApplyTo(sectionToPatch, ModelState);
+
+            if (!TryValidateModel(sectionToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(sectionToPatch, sectionModelFromRepo);
+
+            _repository.UpdateSection(sectionModelFromRepo);
 
             _repository.SaveChanges();
 

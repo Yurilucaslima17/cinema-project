@@ -14,5 +14,6 @@ namespace cinema_api.Data
         void CreateSection(Section section);
         void UpdateSection(Section section);
         void DeleteSection(Section section);
+        bool ValidateSection(Section sectionModel);
     }
 }

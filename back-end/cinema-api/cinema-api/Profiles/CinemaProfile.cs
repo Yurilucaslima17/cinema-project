@@ -15,17 +15,22 @@ namespace cinema_api.Profiles
             CreateMap<Film, FilmReadDto>();
             CreateMap<FilmCreateDto, Film>();
             CreateMap<FilmUpdateDto, Film>();
+            CreateMap<Film, FilmUpdateDto>();
 
             CreateMap<User, UserReadDto>();
             CreateMap<UserCreateDto, User>();
             CreateMap<UserUpdateDto, User>();
+            CreateMap<User, UserUpdateDto>();
 
             CreateMap<Section, SectionReadDto>();
             CreateMap<SectionCreateDto, Section>();
             CreateMap<SectionUpdateDto, Section>();
+            CreateMap<Section, SectionUpdateDto>();
 
-            CreateMap<Room, UserReadDto>();
-
+            CreateMap<Room, RoomReadDto>();
+            CreateMap<RoomCreateDto, Room>();
+            CreateMap<RoomUpdateDto, Room>();
+            CreateMap<Room, RoomUpdateDto>();
         }
     }
 }
